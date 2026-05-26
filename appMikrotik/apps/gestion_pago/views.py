@@ -141,7 +141,7 @@ def modificar_pago(request, id):
                     Para otro cliente {clienteAnterior.nombre} ((Cédula: {clienteAnterior.cedula}).
                     Monto anterior: {montoAnterior}$, Monto nuevo: {montoNuevo}$
                     Tasa anterior: {pago.tasa}, Tasa nueva: {form.cleaned_data.get('tasa')}
-                    Comprobante anterior: {pago.comprobante.url if pago.comprobante else 'Sin comprobante'}, Comprobante nuevo: {nuevoPago.comprobante.url if nuevoPago.comprobante.url else 'Sin comprobante'}
+                    Comprobante anterior: {pago.comprobante.url if pago.comprobante else 'Sin comprobante'}, Comprobante nuevo: {nuevoPago.comprobante.url if nuevoPago.comprobante else 'Sin comprobante'}
                     Fecha anterior: {pago.fecha}, Fecha nueva: {form.cleaned_data.get('fecha')}
                     Personal anterior: {pago.idPersonal.username}, Personal nuevo: {request.user.username}""",
                     modulo = "Gestion de pagos",
