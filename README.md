@@ -5,5 +5,5 @@ En vista de que se estan agrupando las apps en una carpeta es necesario que cons
 alguna de las dos alternativas
 
 - ### Indicar la ruta especfica (recomendada)
-    > Comando: py manage.py startapp nombre_app /apps/nombre_app
+    > Comando: py manage.py startapp nombre_app ./apps/nombre_app
 - ### Crear la app convencionalmente, y moverla con linea de comandos

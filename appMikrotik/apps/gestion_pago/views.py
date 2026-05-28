@@ -3,7 +3,6 @@ from django.utils import timezone
 from core.models import Pago, Logs, Cliente
 from .forms import PagoForm
 
-
 # Create your views here.
 def gestion_pago(request,id):
     if id == 0:
