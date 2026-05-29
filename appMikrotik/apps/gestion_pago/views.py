@@ -15,12 +15,7 @@ def gestion_pago(request, id):
 
 def detalles_pago(request, id):
     pago = get_object_or_404(Pago, id=id)
-    #form = DetallesPagoForm(instance=pago)
-
-    for field in form.fields.values():
-        field.disabled = True
-
-    return render(request, 'detalles_pago.html', {'form': form, 'pago': pago})
+    return render(request, 'detalles_pago.html', { 'pago': pago})
 
 def crear_pago(request):
     if request.method == 'POST':
