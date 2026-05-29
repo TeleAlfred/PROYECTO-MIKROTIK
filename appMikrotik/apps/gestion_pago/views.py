@@ -5,13 +5,36 @@ from .forms import PagoForm, FiltroPagos
 
 # Create your views here.
 def gestion_pago(request, id):
-    filtro = FiltroPagos()
-    if id == 0:
-        objetos = Pago.objects.all()
-    else:
-        objetos = Pago.objects.filter(idCliente=id)
+    pagos = Pago.objects.all().order_by('-fecha')
 
-    return render(request, 'gestion_pagos.html', {'pagos': objetos, 'filtros': filtro})
+    if request.method == 'POST':
+        filtro = FiltroPagos(request.POST)
+        if filtro.is_valid():
+            nombreCliente = filtro.cleaned_data.get('nombreCliente')
+            fecha_inicio = filtro.cleaned_data.get('fecha_inicio')
+            fecha_fin = filtro.cleaned_data.get('fecha_fin')
+
+            print(f"Nombre del cliente: {nombreCliente}, Fecha inicio: {fecha_inicio}, Fecha fin: {fecha_fin}") 
+
+            if nombreCliente:
+                pagos = pagos.filter(idCliente__nombre__icontains=nombreCliente)
+
+            if fecha_inicio and fecha_fin:
+                pagos = pagos.filter(fecha__range=(fecha_inicio, fecha_fin))
+            elif fecha_inicio:
+                pagos = pagos.filter(fecha__gte=fecha_inicio)
+            elif fecha_fin:
+                pagos = pagos.filter(fecha__lte=fecha_fin)
+
+            pagos = pagos.order_by('-fecha')
+            return render(request, 'gestion_pagos.html', {'pagos': pagos, 'filtros': filtro})
+    else:
+        filtro = FiltroPagos()
+        if id != 0:
+            pagos = pagos.filter(idCliente=id)
+        
+    return render(request, 'gestion_pagos.html', {'pagos': pagos, 'filtros': filtro})
+
 
 def crear_pago(request):
     if request.method == 'POST':
@@ -155,3 +178,8 @@ def modificar_pago(request, id):
         form = PagoForm(instance=pago)
         
     return render(request, 'modificar_pago.html', {'form': form})
+
+def mostrar_detalles(request, id):
+    pago = get_object_or_404(Pago, id=id)
+    cliente = pago.idCliente
+    return render(request, 'detalles_pago.html', {'pago': pago, 'cliente': cliente})
