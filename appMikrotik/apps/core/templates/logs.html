@@ -54,8 +54,30 @@
                     {% if logs %}
                         {% for log in logs %}
                             <tr>
-                                <td>{{ log.tipo }}</td>
-                                <td>{{ log.actividad }}</td>
+                                <td>
+                                {% if log.error %}
+                                        <a
+                                        name=""
+                                        id=""
+                                        title="Actividad de flujo atipico"
+                                        class="btn btn-sm"
+                                        href="#"
+                                        role="button"
+                                        ><img src="{% static 'images/atipico.svg' %}" alt="" width="20" height="20"></a
+                                    >
+                                {% else %}
+                                    <a
+                                        name=""
+                                        id=""
+                                        title="Actividad de flujo tipico"
+                                        class="btn btn-sm"
+                                        href="#"
+                                        role="button"
+                                        ><img src="{% static 'images/tipico.svg' %}" alt="" width="20" height="20"></a
+                                    >
+                                {% endif %}
+                                </td>
+                                <td>{{ log.mensaje }}</td>
                                 <td>{{ log.modulo }}</td>
                                 <td>{{ log.fecha }}</td>
                                 <td>
